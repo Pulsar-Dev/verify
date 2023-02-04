@@ -1,12 +1,13 @@
 import {getAccessToken, getUserId, getUserSteamID} from "@/helpers/discord";
 import {getGmodstoreID, getGmodstorePurchases} from "@/helpers/gmodstore";
 import {givePulsarRoles} from "@/helpers/pulsar";
+import { withSentry } from '@sentry/nextjs';
 
 const catcher = (res) => {
     res.status(500).json({error: 'Internal Server Error'})
 }
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
     if (req.method !== 'GET') {
         res.status(400).json({error: 'Invalid method'})
         return
@@ -37,3 +38,5 @@ export default async function handler(req, res) {
 
     res.status(200).json({"data": "OK"})
 }
+
+export default withSentry(handler);
