@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from "next/link";
 
 export default function Hero() {
-    const discordUrl = "https://discord.com/api/oauth2/authorize?client_id=983113611364937778&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fdiscord&response_type=code&scope=connections%20identify"
+    const discordUrl = process.env.NEXT_PUBLIC_DISCORD_SIGNIN
     return (
         <>
             <div className="">
