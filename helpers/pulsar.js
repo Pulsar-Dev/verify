@@ -1,7 +1,7 @@
 const axios = require("axios");
 const ids = require("./ids.json")
-const guild = "935633470221332520"
-const accessToken = "OTM1NjM3NzQzMzU3MjYzOTcy.YfBijQ.Gt2_E8Qq9YGFyhQph2l-d9qYFfg"
+const guild = process.env.PULSAR_GUILD
+const accessToken = process.env.PULSAR_TOKEN
 
 async function giveRole(roleId, userId) {
     return new Promise(async function (resolve, reject) {

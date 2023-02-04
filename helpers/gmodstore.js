@@ -1,5 +1,5 @@
 const axios = require("axios");
-const accessToken = "961575cf-5be2-4ec5-9239-9c0c80252423|fZyDM5VblBdbTjXquqjpGKxDAGxyt7nO5OwLG9cb"
+const accessToken = process.env.GMODSTORE_TOKEN;
 
 async function getGmodstoreID(steamId) {
     return new Promise(async function (resolve, reject) {

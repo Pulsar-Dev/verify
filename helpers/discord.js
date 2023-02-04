@@ -3,11 +3,11 @@ const axios = require("axios");
 
 async function getAccessToken(code) {
     const form = new FormData();
-    form.append('client_id', '983113611364937778');
-    form.append("client_secret", "glGYGaVSuZfZSUdGdFB2D5Wwmjtu3FzT")
+    form.append('client_id', process.env.DISCORD_CLIENT_ID)
+    form.append("client_secret", process.env.DISCORD_CLIENT_SECRET)
     form.append("grant_type", "authorization_code")
     form.append("code", code)
-    form.append("redirect_uri", "http://localhost:3000/discord")
+    form.append("redirect_uri", process.env.DISCORD_REDIRECT_URI)
 
     return new Promise(function (resolve, reject) {
         axios.post('https://discord.com/api/v10/oauth2/token', form, {headers: form.getHeaders()}).then(res => {
