@@ -13,25 +13,27 @@ export default async function handler(req, res) {
         res.status(500).json({error: 'Missing code'})
         return
     }
-    console.log("a")
-    const accessToken = await getAccessToken(code)
-    console.log("b")
-    console.log("TOKEN:", accessToken)
-    const steamId = await getUserSteamID(accessToken)
-    console.log("c")
-    const promise1 = Promise.all([
-        getUserId(accessToken),
-        getGmodstoreID(steamId)
-    ])
-    console.log("d")
-    const promise1Out = await promise1
-    const userId = promise1Out[0]
-    const gmodstoreId = promise1Out[1]
-    console.log("e")
-    const gmodstorePurchases = await getGmodstorePurchases(gmodstoreId)
-    console.log("f")
-    await givePulsarRoles(gmodstorePurchases, userId)
-    console.log("g")
-    res.status(200).json({"data": "OK"})
+    try {
+        const accessToken = await getAccessToken(code)
+
+        const steamId = await getUserSteamID(accessToken)
+
+        const promise1 = Promise.all([
+            getUserId(accessToken),
+            getGmodstoreID(steamId)
+        ])
+
+        const promise1Out = await promise1
+        const userId = promise1Out[0]
+        const gmodstoreId = promise1Out[1]
+
+        const gmodstorePurchases = await getGmodstorePurchases(gmodstoreId)
+
+        await givePulsarRoles(gmodstorePurchases, userId)
+
+        res.status(200).json({"data": "OK"})
+    } catch (e) {
+        res.status(500).json({error: "Internal Server Error"})
+    }
 }
 

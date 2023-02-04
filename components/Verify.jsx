@@ -10,6 +10,7 @@ export default function Verify({text}) {
                         src={"/img/white.png"}
                         width={256}
                         height={256}
+                        priority
                     />
                 </div>
                 <div>

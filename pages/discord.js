@@ -1,6 +1,7 @@
 import Verify from "@/components/Verify";
-import useSWR from 'swr'
+import useSWRImmutable from 'swr/immutable'
 import {useRouter} from "next/router";
+import {useEffect} from "react";
 
 const fetcher = async url => {
     const res = await fetch(url)
@@ -19,7 +20,9 @@ const fetcher = async url => {
 export default function Discord({}) {
     const router = useRouter()
     const {code} = router.query
-    const {data, error} = useSWR(`/api/connection?code=${code}`, fetcher)
+
+    const {data, error} = useSWRImmutable(`/api/connection?code=${code}`, fetcher)
+
 
     if (error) {
         return (

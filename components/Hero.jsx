@@ -12,6 +12,7 @@ export default function Hero() {
                         src={"/img/white.png"}
                         width={256}
                         height={256}
+                        priority
                     />
                 </div>
                 <div>
