@@ -14,13 +14,17 @@ export default async function handler(req, res) {
         return
     }
     try {
+        console.time("getToken")
         const accessToken = await getAccessToken(code).catch((e) => {
             res.status(500).json({"data": e})
         })
-
+        console.timeEnd("getToken")
+        console.time("getUserId")
         const steamId = await getUserSteamID(accessToken).catch((e) => {
             res.status(500).json({"data": e})
         })
+        console.timeEnd("getUserId")
+        console.time("getIds")
 
         const promise1Out = await Promise.all([
             getUserId(accessToken),
@@ -28,19 +32,27 @@ export default async function handler(req, res) {
         ]).catch((e) => {
             res.status(500).json({"data": e})
         })
+        console.timeEnd("getIds")
 
         const userId = promise1Out[0]
         const gmodstoreId = promise1Out[1]
+        console.time("getPurchases")
 
         const gmodstorePurchases = await getGmodstorePurchases(gmodstoreId).catch((e) => {
             res.status(500).json({"data": e})
         })
+        console.timeEnd("getPurchases")
+
+        console.time("giveRoles")
 
         await givePulsarRoles(gmodstorePurchases, userId).then(() => {
             res.status(200).json({"data": "OK"})
         }).catch((e) => {
             res.status(500).json({"data": e})
         })
+        console.timeEnd("giveRoles")
+
+
     } catch (e) {
         res.status(500).json({data: "Internal Server Error"})
     }
