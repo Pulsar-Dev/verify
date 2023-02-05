@@ -10,6 +10,7 @@ export default async function handler(req, res) {
     }
 
     if (!req.body || !req.body.user) {
+        console.log("missing user")
         res.status(500).json({data: 'Missing user'})
         return
     }
@@ -20,6 +21,7 @@ export default async function handler(req, res) {
     const { uuid } = user;
 
     if (!uuid) {
+        console.log("missing uuid")
         res.status(500).json({data: 'Missing uuid'})
         return
     }
@@ -27,13 +29,16 @@ export default async function handler(req, res) {
     const addonId = addon.uuid
 
     const DBUser = await fetchFromGmodstoreID(uuid).catch((e) => {
+        console.log(e)
         return
     })
 
     const discordID = DBUser.discordID
     await giveRole(discordID, addonId).catch((e) => {
+        console.log(e)
         return
     }).then(() => {
+        console.log("done")
         res.status(200).json({data: "OK"})
     })
 }
