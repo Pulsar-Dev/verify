@@ -19,12 +19,12 @@ export default async function handler(req, res) {
             res.status(500).json({"data": e})
         })
         console.timeEnd("getToken")
-        console.time("getUserId")
+        console.time("getUserSteamId")
         const steamId = await getUserSteamID(accessToken).catch((e) => {
             res.status(500).json({"data": e})
         })
-        console.timeEnd("getUserId")
-        console.time("getIds")
+        console.timeEnd("getUserSteamId")
+        console.time("getGMSDiscIds")
 
         const promise1Out = await Promise.all([
             getUserId(accessToken),
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         ]).catch((e) => {
             res.status(500).json({"data": e})
         })
-        console.timeEnd("getIds")
+        console.timeEnd("getGMSDiscIds")
 
         const userId = promise1Out[0]
         const gmodstoreId = promise1Out[1]
