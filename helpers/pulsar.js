@@ -4,30 +4,37 @@ const guild = process.env.PULSAR_GUILD
 const accessToken = process.env.PULSAR_TOKEN
 
 async function giveRole(roleId, userId) {
-    return new Promise(async function (resolve, reject) {
-        axios.put(`https://discord.com/api/v10/guilds/${guild}/members/${userId}/roles/${roleId}`, {}, {
+    try {
+        await axios.put(`https://discord.com/api/v10/guilds/${guild}/members/${userId}/roles/${roleId}`, {}, {
             headers: {
                 "Authorization": `Bot ${accessToken}`
             }
-        }).then(() => resolve()).catch(() => reject("Unable to give role"))
-    })
+        })
+    } catch {
+        return new Error("Unable to give role")
+    }
 }
 
 async function givePulsarRoles(purchases, userId) {
-    return new Promise(async function (resolve, reject) {
-        let customer = false
-        await purchases.forEach(purchase => {
-            const id = purchase.productId
-            const roleId = ids[id]
-            if (!roleId) return;
-            giveRole(roleId, userId).catch(() => reject("Unable to give role"))
-            customer = true
-        })
-        if (customer) {
-            await giveRole(ids["customer"], userId).catch(() => reject("Unable to give customer role"))
+    let customer = false
+    await purchases.forEach(purchase => {
+        const id = purchase.productId
+        const roleId = ids[id]
+        if (!roleId) return;
+        try {
+            giveRole(ids["customer"], userId)
+        } catch {
+            return new Error("Unable to give customer role")
         }
-        resolve()
+        customer = true
     })
+    if (customer) {
+        try {
+            await giveRole(ids["customer"], userId)
+        } catch {
+            return new Error("Unable to give customer role")
+        }
+    }
 }
 
 module.exports = {

@@ -1,10 +1,9 @@
-const { PrismaClient } = require('@prisma/client')
-const axios = require("axios");
+const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
 
 
 async function addUserToDB(discordID, steamID, gmodstoreID) {
-    return new Promise(async function (resolve, reject) {
+    try {
         await prisma.users.upsert({
             where: {
                 discordID: discordID
@@ -19,30 +18,27 @@ async function addUserToDB(discordID, steamID, gmodstoreID) {
                 steamID: steamID,
                 gmodstoreID: gmodstoreID
             }
-        }).catch((e) => {
-            console.log(e)
-            reject("Error adding user to database")
         })
+    } catch (e) {
+        return new Error("Error adding user to DB")
+    }
 
-        await prisma.$disconnect()
-        resolve()
-    })
+    await prisma.$disconnect()
 }
 
 async function fetchFromGmodstoreID(gmodstoreID) {
-    return new Promise(async function (resolve, reject) {
+    try {
         const user = await prisma.users.findFirst({
             where: {
                 gmodstoreID: gmodstoreID
             },
-        }).catch((e) => {
-            console.log(e)
-            reject("Error fetching from DB")
         })
-
         await prisma.$disconnect()
-        resolve(user)
-    })
+        return user
+    } catch {
+        await prisma.$disconnect()
+
+    }
 }
 
 module.exports = {
