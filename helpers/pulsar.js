@@ -9,7 +9,7 @@ async function giveRole(roleId, userId) {
             headers: {
                 "Authorization": `Bot ${accessToken}`
             }
-        }).then(r => resolve()).catch(err => reject(err))
+        }).then(() => resolve()).catch(() => reject("Unable to give role"))
     })
 }
 
@@ -20,11 +20,11 @@ async function givePulsarRoles(purchases, userId) {
             const id = purchase.productId
             const roleId = ids[id]
             if (!roleId) return;
-            giveRole(roleId, userId).catch(err => reject(err))
+            giveRole(roleId, userId).catch(() => reject("Unable to give role"))
             customer = true
         })
         if (customer) {
-            await giveRole(ids["customer"], userId).catch(err => reject(err))
+            await giveRole(ids["customer"], userId).catch(() => reject("Unable to give customer role"))
         }
         resolve()
     })

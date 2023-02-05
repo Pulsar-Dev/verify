@@ -3,8 +3,8 @@ import Image from 'next/image'
 export default function Verify({text}) {
     return (
         <>
-            <div className="">
-                <div>
+            <div className="relative">
+                <div className="flex items-center justify-center align-center">
                     <Image
                         alt="Pulsar Verify"
                         src={"/img/white.png"}

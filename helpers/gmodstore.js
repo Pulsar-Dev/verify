@@ -11,8 +11,8 @@ async function getGmodstoreID(steamId) {
             const data = res.data
             const id = data.data[0].id
             resolve(id)
-        }).catch(err => {
-            reject(err)
+        }).catch(() => {
+            reject("GModStore API returned error when fetching ID")
         })
     })
 }
@@ -27,8 +27,8 @@ async function getGmodstorePurchases(gmodstoreId) {
             const data = res.data
             const purchases = data.data
             resolve(purchases)
-        }).catch(err => {
-            reject(err)
+        }).catch(() => {
+            reject("Unable to fetch purchases from GModStore API")
         })
     })
 }

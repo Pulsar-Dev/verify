@@ -1,13 +1,12 @@
 import Verify from "@/components/Verify";
 import useSWRImmutable from 'swr/immutable'
 import {useRouter} from "next/router";
-import {useEffect} from "react";
 
 const fetcher = async url => {
     const res = await fetch(url)
 
     if (!res.ok) {
-        const error = new Error('An error occurred while fetching the data.')
+        const error = new Error('fuck')
 
         error.info = await res.json()
         error.status = res.status
@@ -23,12 +22,11 @@ export default function Discord({}) {
 
     const {data, error} = useSWRImmutable(`/api/connection?code=${code}`, fetcher)
 
-
     if (error) {
         return (
             <>
                 <div className="flex items-center justify-center align-center py-12">
-                    <Verify text="An Error Occurred."/>
+                    <Verify text={`${error.info.data}`}/>
                 </div>
 
                 <div className="bg-gradient"></div>
@@ -59,7 +57,7 @@ export default function Discord({}) {
 }
 
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
     return {
         props: {},
     }

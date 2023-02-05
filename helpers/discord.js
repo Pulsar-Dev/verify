@@ -14,8 +14,8 @@ async function getAccessToken(code) {
             const accessToken = res.data.access_token
 
             resolve(accessToken)
-        }).catch(err => {
-            reject(err)
+        }).catch(() => {
+            reject("Invalid OAuth Code")
         })
 
     })
@@ -31,7 +31,7 @@ async function getUserSteamID(accessToken) {
             const data = res.data
             const steamData = data.filter((connection) => connection.type === 'steam')
             if (!steamData || steamData.length === 0) {
-                reject('No Steam Account Found')
+                reject('Missing Steam account connection')
             }
 
             const steamId = steamData[0].id
@@ -49,8 +49,8 @@ async function getUserId(accessToken) {
             const data = res.data
             const id = data.id
             resolve(id)
-        }).catch(err => {
-            reject(err)
+        }).catch(() => {
+            reject("Unable to fetch user info.")
         })
     })
 }
