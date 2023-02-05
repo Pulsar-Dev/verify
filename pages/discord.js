@@ -48,7 +48,7 @@ export default function Discord({}) {
     return (
         <>
             <div className="flex items-center justify-center align-center py-12">
-                <Verify text="Success!"/>
+                <Verify text="Success! You have been given your roles in the Pulsar Discord."/>
             </div>
         </>
     )
