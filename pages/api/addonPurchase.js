@@ -1,4 +1,3 @@
-import axios from "axios";
 import ids from "@helpers/ids.json"
 import {fetchFromGmodstoreID} from "@helpers/prisma";
 import {giveRole} from "@helpers/pulsar";
@@ -10,7 +9,6 @@ export default async function handler(req, res) {
     }
 
     if (!req.body || !req.body.user) {
-        console.log("missing user")
         res.status(500).json({data: 'Missing user'})
         return
     }
@@ -21,25 +19,22 @@ export default async function handler(req, res) {
     const { uuid } = user;
 
     if (!uuid) {
-        console.log("missing uuid")
         res.status(500).json({data: 'Missing uuid'})
         return
     }
 
     const addonId = addon.uuid
 
-    const DBUser = await fetchFromGmodstoreID(uuid).catch((e) => {
-        console.log(e)
+    const DBUser = await fetchFromGmodstoreID(uuid)
+
+    if (!DBUser) {
+        res.status(500).json({data: 'User not found'})
         return
-    })
+    }
 
     const discordID = DBUser.discordID
     const discordRole = ids[addonId]
-    await giveRole(discordRole, discordID).catch((e) => {
-        console.log(e)
-        return
-    }).then(() => {
-        console.log("done")
+    await giveRole(discordRole, discordID).then(() => {
         res.status(200).json({data: "OK"})
     })
 }
