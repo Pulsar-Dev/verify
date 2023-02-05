@@ -34,7 +34,8 @@ export default async function handler(req, res) {
     })
 
     const discordID = DBUser.discordID
-    await giveRole(discordID, addonId).catch((e) => {
+    const discordRole = ids[addonId]
+    await giveRole(discordRole, discordID).catch((e) => {
         console.log(e)
         return
     }).then(() => {
