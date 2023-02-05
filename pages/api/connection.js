@@ -19,32 +19,32 @@ export default async function handler(req, res) {
             res.status(500).json({"data": e})
         })
         console.timeEnd("getToken")
+
         console.time("getUserSteamId")
         const steamId = await getUserSteamID(accessToken).catch((e) => {
             res.status(500).json({"data": e})
         })
         console.timeEnd("getUserSteamId")
-        console.time("getGMSDiscIds")
 
-        const promise1Out = await Promise.all([
-            getUserId(accessToken),
-            getGmodstoreID(steamId)
-        ]).catch((e) => {
+        console.time("getDiscUserId")
+        const userId = await getUserId(accessToken).catch((e) => {
             res.status(500).json({"data": e})
         })
-        console.timeEnd("getGMSDiscIds")
+        console.timeEnd("getDiscUserId")
 
-        const userId = promise1Out[0]
-        const gmodstoreId = promise1Out[1]
+        console.time("getGMSUserId")
+        const gmodstoreId = await getGmodstoreID(steamId).catch((e) => {
+            res.status(500).json({"data": e})
+        })
+        console.timeEnd("getGMSUserId")
+
         console.time("getPurchases")
-
         const gmodstorePurchases = await getGmodstorePurchases(gmodstoreId).catch((e) => {
             res.status(500).json({"data": e})
         })
         console.timeEnd("getPurchases")
 
         console.time("giveRoles")
-
         await givePulsarRoles(gmodstorePurchases, userId).then(() => {
             res.status(200).json({"data": "OK"})
         }).catch((e) => {
