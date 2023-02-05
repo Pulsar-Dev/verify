@@ -50,8 +50,6 @@ export default function Discord({}) {
             <div className="flex items-center justify-center align-center py-12">
                 <Verify text="Success!"/>
             </div>
-
-            <div className="bg-gradient"></div>
         </>
     )
 }
