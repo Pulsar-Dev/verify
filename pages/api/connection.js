@@ -1,60 +1,58 @@
 import {getAccessToken, getUserId, getUserSteamID} from "@/helpers/discord";
 import {getGmodstoreID, getGmodstorePurchases} from "@/helpers/gmodstore";
 import {givePulsarRoles} from "@/helpers/pulsar";
+let returnedData = false
+async function returnData(res, status, data) {
+    if (returnedData) return;
+    returnedData = true
+    res.status(status).json({data: data})
+}
 
 export default async function handler(req, res) {
     if (req.method !== 'GET') {
-        res.status(500).json({error: 'Invalid method'})
+        await returnData(res, 405, "Invalid Method")
         return
     }
     const code = req.query.code || null
 
     if (!code) {
-        res.status(500).json({error: 'Missing code'})
+        await returnData(res, 500, "Missing code")
         return
     }
     try {
-        console.time("getToken")
-        const accessToken = await getAccessToken(code).catch((e) => {
-            res.status(500).json({"data": e})
+        const accessToken = await getAccessToken(code).catch(async (e) => {
+            await returnData(res, 500, e)
         })
-        console.timeEnd("getToken")
 
-        console.time("getUserSteamId")
-        const steamId = await getUserSteamID(accessToken).catch((e) => {
-            res.status(500).json({"data": e})
+        const steamId = await getUserSteamID(accessToken).catch(async (e) => {
+            await returnData(res, 500, e)
+            return
         })
-        console.timeEnd("getUserSteamId")
 
-        console.time("getDiscUserId")
-        const userId = await getUserId(accessToken).catch((e) => {
-            res.status(500).json({"data": e})
+        const userId = await getUserId(accessToken).catch(async (e) => {
+            await returnData(res, 500, e)
+            return
         })
-        console.timeEnd("getDiscUserId")
 
-        console.time("getGMSUserId")
-        const gmodstoreId = await getGmodstoreID(steamId).catch((e) => {
-            res.status(500).json({"data": e})
+        const gmodstoreId = await getGmodstoreID(steamId).catch(async (e) => {
+            await returnData(res, 500, e)
+            return
         })
-        console.timeEnd("getGMSUserId")
 
-        console.time("getPurchases")
-        const gmodstorePurchases = await getGmodstorePurchases(gmodstoreId).catch((e) => {
-            res.status(500).json({"data": e})
+        const gmodstorePurchases = await getGmodstorePurchases(gmodstoreId).catch(async (e) => {
+            await returnData(res, 500, e)
+            return
         })
-        console.timeEnd("getPurchases")
 
-        console.time("giveRoles")
-        await givePulsarRoles(gmodstorePurchases, userId).then(() => {
-            res.status(200).json({"data": "OK"})
-        }).catch((e) => {
-            res.status(500).json({"data": e})
+        await givePulsarRoles(gmodstorePurchases, userId).then(async () => {
+            await returnData(res, 200, "OK")
+        }).catch(async (e) => {
+            await returnData(res, 500, e)
+            return
         })
-        console.timeEnd("giveRoles")
-
 
     } catch (e) {
-        res.status(500).json({data: "Internal Server Error"})
+        await returnData(res, 500, "Internal Server Error")
     }
 }
 

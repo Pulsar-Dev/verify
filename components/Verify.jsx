@@ -1,18 +1,10 @@
-import Image from 'next/image'
+import Logo from "@/components/Logo";
 
 export default function Verify({text}) {
     return (
         <>
             <div className="relative">
-                <div className="flex items-center justify-center align-center">
-                    <Image
-                        alt="Pulsar Verify"
-                        src={"/img/white.png"}
-                        width={256}
-                        height={256}
-                        priority
-                    />
-                </div>
+                <Logo/>
                 <div>
                     {text ?
                         <h1 className="text-xl text-white text-center">{text}</h1>
@@ -24,8 +16,6 @@ export default function Verify({text}) {
                 </div>
 
             </div>
-
-            <div className="bg-gradient"></div>
         </>
     )
 }
