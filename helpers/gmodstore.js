@@ -11,7 +11,8 @@ async function getGmodstoreID(steamId) {
 
         const data = returnData.data
         return data.data[0].id
-    } catch {
+    } catch (e) {
+        console.error(e)
         return new Error("GModStore API returned error when fetching ID")
     }
 }
@@ -26,7 +27,8 @@ async function getGmodstorePurchases(gmodstoreId) {
 
         const data = returnData.data
         return data.data
-    } catch {
+    } catch (e) {
+        console.error(e)
         return new Error("Unable to fetch purchases from GModStore API")
     }
 }

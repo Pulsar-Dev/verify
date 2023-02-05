@@ -10,8 +10,11 @@ async function getAccessToken(code) {
     form.append("redirect_uri", process.env.DISCORD_REDIRECT_URI)
 
     try {
-        return await axios.post('https://discord.com/api/v10/oauth2/token', form, {headers: form.getHeaders()})
-    } catch {
+        const returnData = await axios.post('https://discord.com/api/v10/oauth2/token', form, {headers: form.getHeaders()})
+        const data = returnData.data
+        return data.access_token
+    } catch (e) {
+        console.error(e)
         throw new Error("Invalid OAuth code.")
     }
 }
@@ -32,7 +35,8 @@ async function getUserSteamID(accessToken) {
         }
 
         return steamData[0].id
-    } catch {
+    } catch (e) {
+        console.error(e)
         return new Error("Unable to fetch user connections")
     }
 }
@@ -43,7 +47,8 @@ async function getUserId(accessToken) {
 
         const data = returnData.data
         return data.id
-    } catch {
+    } catch (e) {
+        console.error(e)
         return new Error("Unable to fetch user data")
     }
 }

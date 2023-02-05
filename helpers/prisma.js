@@ -20,6 +20,7 @@ async function addUserToDB(discordID, steamID, gmodstoreID) {
             }
         })
     } catch (e) {
+        console.error(e)
         return new Error("Error adding user to DB")
     }
 
@@ -35,7 +36,8 @@ async function fetchFromGmodstoreID(gmodstoreID) {
         })
         await prisma.$disconnect()
         return user
-    } catch {
+    } catch (e) {
+        console.error(e)
         await prisma.$disconnect()
 
     }

@@ -58,6 +58,7 @@ export default async function handler(req, res) {
         })
 
     } catch (e) {
+        console.error(e)
         await returnData(res, 500, "Internal Server Error")
     }
 }

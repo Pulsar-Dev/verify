@@ -10,7 +10,8 @@ async function giveRole(roleId, userId) {
                 "Authorization": `Bot ${accessToken}`
             }
         })
-    } catch {
+    } catch (e) {
+        console.error(e)
         return new Error("Unable to give role")
     }
 }
@@ -23,7 +24,8 @@ async function givePulsarRoles(purchases, userId) {
         if (!roleId) return;
         try {
             giveRole(ids["customer"], userId)
-        } catch {
+        } catch (e) {
+            console.error(e)
             return new Error("Unable to give customer role")
         }
         customer = true
@@ -31,7 +33,8 @@ async function givePulsarRoles(purchases, userId) {
     if (customer) {
         try {
             await giveRole(ids["customer"], userId)
-        } catch {
+        } catch (e) {
+            console.error(e)
             return new Error("Unable to give customer role")
         }
     }
