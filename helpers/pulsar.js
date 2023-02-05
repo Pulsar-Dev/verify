@@ -31,5 +31,6 @@ async function givePulsarRoles(purchases, userId) {
 }
 
 module.exports = {
-    givePulsarRoles
+    givePulsarRoles,
+    giveRole
 }

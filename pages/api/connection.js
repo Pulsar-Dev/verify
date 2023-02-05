@@ -1,6 +1,7 @@
 import {getAccessToken, getUserId, getUserSteamID} from "@/helpers/discord";
 import {getGmodstoreID, getGmodstorePurchases} from "@/helpers/gmodstore";
 import {givePulsarRoles} from "@/helpers/pulsar";
+import {addUserToDB} from "@/helpers/prisma";
 let returnedData = false
 async function returnData(res, status, data) {
     if (returnedData) return;
@@ -40,6 +41,11 @@ export default async function handler(req, res) {
         })
 
         const gmodstorePurchases = await getGmodstorePurchases(gmodstoreId).catch(async (e) => {
+            await returnData(res, 500, e)
+            return
+        })
+
+        await addUserToDB(userId, steamId, gmodstoreId).catch(async (e) => {
             await returnData(res, 500, e)
             return
         })
