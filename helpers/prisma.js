@@ -3,6 +3,7 @@ const prisma = new PrismaClient()
 
 async function addUserToDB(discordID, steamID, gmodstoreID) {
     try {
+        console.log(`🔃 | Adding user to DB | Discord ID: ${discordID} | Steam ID: ${steamID} | Gmodstore ID: ${gmodstoreID}`)
         await prisma.users.upsert({
             where: {
                 discordID: discordID
@@ -28,6 +29,7 @@ async function addUserToDB(discordID, steamID, gmodstoreID) {
 
 async function fetchFromGmodstoreID(gmodstoreID) {
     try {
+        console.log(`🔃 | Fetching user from DB | Gmodstore ID: ${gmodstoreID}`)
         const user = await prisma.users.findFirst({
             where: {
                 gmodstoreID: gmodstoreID

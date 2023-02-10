@@ -11,6 +11,7 @@ async function getAccessToken(code) {
     form.append("redirect_uri", process.env.DISCORD_REDIRECT_URI)
 
     try {
+        console.log("🔃 | Getting access token from Discord API")
         const returnData = await axios.post('https://discord.com/api/v10/oauth2/token', form, {headers: form.getHeaders()})
         const data = returnData.data
         return data.access_token
@@ -22,6 +23,7 @@ async function getAccessToken(code) {
 
 async function getUserSteamID(accessToken) {
     try {
+        console.log("🔃 | Getting steam ID from Discord API")
         const returnData = await axios.get('https://discord.com/api/v10/users/@me/connections', {
                 headers: {
                     "Authorization": `Bearer ${accessToken}`
@@ -44,6 +46,7 @@ async function getUserSteamID(accessToken) {
 
 async function getUserId(accessToken) {
     try {
+        console.log("🔃 | Getting user ID from Discord API")
         const returnData = await axios.get('https://discord.com/api/v10/users/@me', {headers: {Authorization: `Bearer ${accessToken}`}})
 
         const data = returnData.data

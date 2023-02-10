@@ -5,6 +5,7 @@ const accessToken = process.env.PULSAR_TOKEN
 
 async function giveRole(roleId, userId) {
     try {
+        console.log(`🔃 | Giving role to user [User ID: ${userId}], Role ID: [${roleId}]`)
         await axios.put(`https://discord.com/api/v10/guilds/${guild}/members/${userId}/roles/${roleId}`, {}, {
             headers: {
                 "Authorization": `Bot ${accessToken}`
@@ -18,6 +19,7 @@ async function giveRole(roleId, userId) {
 
 async function givePulsarRoles(purchases, userId) {
     let customer = false
+    console.log("🔃 | Looping through purchases to give roles")
     await purchases.forEach(purchase => {
         const id = purchase.productId
         const roleId = ids[id]
@@ -32,6 +34,7 @@ async function givePulsarRoles(purchases, userId) {
     })
     if (customer) {
         try {
+            console.log(`"🔃 | Giving customer role to user [User ID: ${userId}`)
             await giveRole(ids["customer"], userId)
         } catch (e) {
             console.error(e)

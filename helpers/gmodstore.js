@@ -3,6 +3,7 @@ const accessToken = process.env.GMODSTORE_TOKEN;
 
 async function getGmodstoreID(steamId) {
     try {
+        console.log("🔃 | Getting Gmodstore UUID from Gmodstore API")
         const returnData = await axios.get(`https://www.gmodstore.com/api/v3/users?filter[steamId]=${steamId}`, {
             headers: {
                 "Authorization": `Bearer ${accessToken}`
@@ -19,6 +20,7 @@ async function getGmodstoreID(steamId) {
 
 async function getGmodstorePurchases(gmodstoreId) {
     try {
+        console.log("🔃 | Getting Gmodstore purchases from Gmodstore API")
         const returnData = await axios.get(`https://www.gmodstore.com/api/v3/users/${gmodstoreId}/purchases`, {
             headers: {
                 "Authorization": `Bearer ${accessToken}`
