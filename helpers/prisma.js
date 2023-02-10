@@ -1,7 +1,6 @@
 const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
 
-
 async function addUserToDB(discordID, steamID, gmodstoreID) {
     try {
         await prisma.users.upsert({

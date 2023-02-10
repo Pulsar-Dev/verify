@@ -48,6 +48,7 @@ export default function Hero() {
                                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-black">
                                     - Your Discord ID<br />
                                     - Your Steam ID<br />
+                                    - Your Gmodstore ID
                                 </Disclosure.Panel>
                             </>
                         )}

@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "./axios";
 const accessToken = process.env.GMODSTORE_TOKEN;
 
 async function getGmodstoreID(steamId) {

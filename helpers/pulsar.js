@@ -1,5 +1,5 @@
-const axios = require("axios");
-const ids = require("./ids.json")
+import axios from "./axios";
+import ids from "./ids.json";
 const guild = process.env.PULSAR_GUILD
 const accessToken = process.env.PULSAR_TOKEN
 

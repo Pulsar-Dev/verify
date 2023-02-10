@@ -1,5 +1,6 @@
-const FormData = require("form-data");
-const axios = require("axios");
+import axios from "./axios";
+import FormData from "form-data";
+
 
 async function getAccessToken(code) {
     const form = new FormData();
