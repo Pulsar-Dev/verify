@@ -3,7 +3,7 @@ const axiosRetry = require('axios-retry');
 
 const axios = axiosC.create({
     baseURL: 'https://verify.lythium.vip',
-    timeout: 1000,
+    timeout: 5000,
 });
 axiosRetry(axios, { retries: 0 });
 
