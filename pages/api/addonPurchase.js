@@ -8,6 +8,11 @@ export default async function handler(req, res) {
     return
   }
 
+  if (!req.query.auth || req.query.auth !== process.env.API_AUTH_KEY) {
+    res.status(401).json({ data: 'Unauthorized' })
+    return
+  }
+
   if (!req.body || !req.body.user) {
     res.status(500).json({ data: 'Missing user' })
     return
