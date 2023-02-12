@@ -14,6 +14,7 @@ async function giveRole(roleId, userId, addonId) {
       {
         headers: {
           Authorization: `Bot ${accessToken}`,
+          'X-Audit-Log-Reason': `User verified. AddonID: ${addonId}`,
         },
       },
     )
@@ -33,6 +34,7 @@ async function removeRole(roleId, userId, addonId) {
       {
         headers: {
           Authorization: `Bot ${accessToken}`,
+          'X-Audit-Log-Reason': `User Revoked. AddonID: ${addonId}`,
         },
       },
     )

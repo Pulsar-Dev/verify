@@ -1,5 +1,6 @@
 import axios from 'axios'
 const accessToken = process.env.GMODSTORE_TOKEN
+import ids from '../ids.json'
 
 async function getGmodstoreUser(steamId) {
   try {
@@ -24,9 +25,24 @@ async function getGmodstoreUser(steamId) {
 async function getGmodstorePurchases(gmodstoreId) {
   try {
     console.log('🔃 | Getting Gmodstore purchases from Gmodstore API')
+    const addonIds = ids
+    const ignoreIds = ['customer', 'revoked']
+
+    const productIds = []
+    for (const [key] of Object.entries(addonIds)) {
+      if (ignoreIds.includes(key)) continue
+      productIds.push(key)
+    }
+
+    const params = new URLSearchParams([
+      ['perPage', 100],
+      ['filter[revoked]', false],
+      ['filter[productId]', productIds],
+    ])
     const returnData = await axios.get(
-      `https://www.gmodstore.com/api/v3/users/${gmodstoreId}/purchases?perPage=100`,
+      `https://www.gmodstore.com/api/v3/users/${gmodstoreId}/purchases`,
       {
+        params,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
