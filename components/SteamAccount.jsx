@@ -12,7 +12,7 @@ export default function Account({ account, onClick, canClick }) {
 
   return (
     <>
-      <div className="flex w-full justify-between rounded-lg backdrop-blur bg-white/50 px-4 py-2">
+      <div className="flex w-full justify-between rounded-lg backdrop-blur bg-white/50 dark:bg-gray-900/50 px-4 py-2">
         <div className="flex items-center justify-center">
           <div className="grid grid-cols-1 gap-0">
             <h1 className="text-xl font-semibold block">{name}</h1>
@@ -24,7 +24,7 @@ export default function Account({ account, onClick, canClick }) {
             <>
               {canClick ? (
                 <button
-                  className="flex items-center justify-center bg-blurple-50 hover:bg-blurple-100 rounded-md"
+                  className="flex items-center justify-center bg-blurple-50 hover:bg-blurple-100 dark:bg-blurpleDark-50 dark:hover:bg-blurple-100 rounded-md"
                   onClick={onClickFunc}
                 >
                   <h1 className="text-lg text-white text-center py-1 px-10">

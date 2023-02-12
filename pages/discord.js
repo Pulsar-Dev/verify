@@ -46,7 +46,6 @@ export default function Discord({}) {
           <Verify />
         </div>
 
-        <div className="bg-gradient"></div>
       </>
     )
   }

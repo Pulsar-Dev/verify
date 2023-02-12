@@ -14,11 +14,16 @@ module.exports = {
           50: '#5865f2',
           100: '#525ccc',
         },
+        blurpleDark: {
+          50: '#0b1799',
+          100: '#20266e',
+        }
       },
     },
     fontFamily: {
       sans: ['Rubik', ...defaultTheme.fontFamily.sans],
     },
   },
+  darkMode: 'class',
   plugins: [],
 }

@@ -9,7 +9,7 @@
   right: 0;
   bottom: 0;
   z-index: -1;
-  background-color: #ff99d6;
+  background-color: #7490ff;
   background-image: radial-gradient(
       at 24% 13%,
       hsla(286, 87%, 62%, 1) 0px,
@@ -21,6 +21,24 @@
     radial-gradient(at 49% 25%, hsla(221, 60%, 61%, 1) 0px, transparent 50%),
     radial-gradient(at 21% 53%, hsla(49, 88%, 68%, 1) 0px, transparent 50%),
     radial-gradient(at 60% 70%, hsla(171, 76%, 76%, 1) 0px, transparent 50%);
+}
+
+.bg-gradient-dark {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: #0021a3;
+  background-image:
+          radial-gradient(at 24% 13%, hsla(286.2, 87%, 25%, 1) 0px, transparent 50%),
+          radial-gradient(at 67% 17%, hsla(243.3, 69%, 26%, 1) 0px, transparent 50%),
+          radial-gradient(at 47% 27%, hsla(238.9, 69%, 30%, 1) 0px, transparent 50%),
+          radial-gradient(at 34% 75%, hsla(264.3, 61%, 24%, 1) 0px, transparent 50%),
+          radial-gradient(at 49% 25%, hsla(221.4, 60%, 24%, 1) 0px, transparent 50%),
+          radial-gradient(at 21% 53%, hsla(49.2, 88%, 27%, 1) 0px, transparent 50%),
+          radial-gradient(at 60% 70%, hsla(171.3, 76%, 30%, 1) 0px, transparent 50%);
 }
 
 .spinner {

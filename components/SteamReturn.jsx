@@ -58,7 +58,7 @@ export default function SteamReturn({ user, accounts }) {
         </p>
 
         <div className="flex items-center justify-center align-center mt-4">
-          <div className="backdrop-blur bg-white/30 rounded-lg">
+          <div className="backdrop-blur bg-white/30 dark:bg-gray-900/30 rounded-lg">
             <div className="grid grid-cols-1 gap-1 p-1">
               {accounts.map((account, index) => {
                 return (
