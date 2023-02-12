@@ -17,7 +17,7 @@ module.exports = {
         blurpleDark: {
           50: '#0b1799',
           100: '#20266e',
-        }
+        },
       },
     },
     fontFamily: {
