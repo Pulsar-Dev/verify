@@ -2,10 +2,10 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js"
+    './app/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './node_modules/flowbite/**/*.js',
   ],
   theme: {
     extend: {
@@ -17,8 +17,8 @@ module.exports = {
       },
     },
     fontFamily: {
-        sans: ['Rubik', ...defaultTheme.fontFamily.sans],
-    }
+      sans: ['Rubik', ...defaultTheme.fontFamily.sans],
+    },
   },
-  plugins: []
+  plugins: [],
 }
