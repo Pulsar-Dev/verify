@@ -1,4 +1,4 @@
-import ids from '@helpers/ids.json'
+import ids from '@/ids.json'
 import { fetchFromGmodstoreID } from '@helpers/prisma'
 import { giveRole } from '@helpers/pulsar'
 
