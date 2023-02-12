@@ -23,6 +23,25 @@ async function giveRole(roleId, userId, addonId) {
   }
 }
 
+async function removeRole(roleId, userId, addonId) {
+  try {
+    console.log(
+        `🔃 | Removing role from user [User ID: ${userId}, Role ID: ${roleId}, Addon ID: ${addonId}]`,
+    )
+    await axios.delete(
+        `https://discord.com/api/v10/guilds/${guild}/members/${userId}/roles/${roleId}`,
+        {
+          headers: {
+            Authorization: `Bot ${accessToken}`,
+          },
+        },
+    )
+  } catch (e) {
+    console.error(e)
+    return new Error('Unable to remove role')
+  }
+}
+
 async function givePulsarRoles(purchases, userId) {
   let customer = false
   console.log('🔃 | Looping through purchases to give roles')
@@ -51,4 +70,5 @@ async function givePulsarRoles(purchases, userId) {
 module.exports = {
   givePulsarRoles,
   giveRole,
+  removeRole
 }
