@@ -1,6 +1,6 @@
 import ids from '@/ids.json'
 import { fetchFromGmodstoreID } from '@helpers/prisma'
-import {giveRole, removeRole} from "@helpers/pulsar";
+import {giveRole, removeRole} from '@helpers/pulsar'
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -40,8 +40,8 @@ export default async function handler(req, res) {
     const discordID = DBUser.discordID
     const discordRole = ids[addonId]
     const revokedRole = ids["revoked"]
-    await giveRole(revokedRole, discordID).catch(() => {})
-    await removeRole(discordRole, discordID).then(() => {
+    await removeRole(revokedRole, discordID).catch(() => {})
+    await giveRole(discordRole, discordID).then(() => {
         res.status(200).json({ data: 'OK' })
     })
 }
