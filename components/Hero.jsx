@@ -10,7 +10,7 @@ export default function Hero() {
             <div className="">
                 <Logo/>
                 <div>
-                    <Link className="flex items-center justify-center mt-6 bg-blurple-50 rounded-md" href={discordUrl}>
+                    <Link className="flex items-center justify-center mt-6 bg-blurple-50 hover:bg-blurple-100 rounded-md" href={discordUrl}>
                         <h1 className="text-lg text-white text-center py-1 px-12">Login with Discord</h1>
                     </Link>
                 </div>

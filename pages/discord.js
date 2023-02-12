@@ -1,12 +1,14 @@
 import Verify from "@/components/Verify";
 import useSWRImmutable from 'swr/immutable'
 import {useRouter} from "next/router";
+import SteamReturn from "@/components/SteamReturn";
+import Error from "@/components/Errors";
 
 const fetcher = async url => {
     const res = await fetch(url)
 
     if (!res.ok) {
-        const error = new Error('fuck')
+        const error = new Error(res.data)
 
         error.info = await res.json()
         error.status = res.status
@@ -19,20 +21,21 @@ const fetcher = async url => {
 export default function Discord({}) {
     const router = useRouter()
     const {code} = router.query
+    if (!code) {
+        return <Error error={"Missing code. Please try again."}/>
+    }
 
-    const {data, error} = useSWRImmutable(`/api/connection?code=${code}`, fetcher)
+    const {data, error} = useSWRImmutable(`/api/getSteamAccounts?code=${code}`, fetcher)
+
+    if (data && data.status === 404) {
+        return <Error error={data.data}/>
+    }
 
     if (error) {
-        return (
-            <>
-                <div className="flex items-center justify-center align-center py-12">
-                    <Verify text={`${error.info.data}`}/>
-                </div>
-
-                <div className="bg-gradient"></div>
-            </>
-        )
+        console.error("error:", error)
+        return <Error/>
     }
+
     if (!data) {
         return (
             <>
@@ -48,7 +51,7 @@ export default function Discord({}) {
     return (
         <>
             <div className="flex items-center justify-center align-center py-12">
-                <Verify text="Success! You have been given your roles in the Pulsar Discord."/>
+                <SteamReturn user={data.user} accounts={data.steamAccounts}/>
             </div>
         </>
     )

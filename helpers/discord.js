@@ -1,6 +1,13 @@
-import axios from "./axios";
+import axios from "axios";
 import FormData from "form-data";
 
+const config = (accessToken) => {
+    return {
+        headers: {
+            "Authorization": `Bearer ${accessToken}`
+        },
+    }
+}
 
 async function getAccessToken(code) {
     const form = new FormData();
@@ -13,23 +20,26 @@ async function getAccessToken(code) {
     try {
         console.log("🔃 | Getting access token from Discord API")
         const returnData = await axios.post('https://discord.com/api/v10/oauth2/token', form, {headers: form.getHeaders()})
-        const data = returnData.data
-        return data.access_token
+
+        if (returnData.status !== 200) {
+            throw new Error("Invalid OAuth code.")
+        }
+
+        return returnData.data.access_token
+
     } catch (e) {
-        console.error(e)
         throw new Error("Invalid OAuth code.")
     }
 }
 
-async function getUserSteamID(accessToken) {
+async function getUserSteamAccounts(accessToken) {
     try {
-        console.log("🔃 | Getting steam ID from Discord API")
-        const returnData = await axios.get('https://discord.com/api/v10/users/@me/connections', {
-                headers: {
-                    "Authorization": `Bearer ${accessToken}`
-                }
-            }
-        )
+        console.log("🔃 | Getting steam accounts from Discord API")
+        const returnData = await axios.get('https://discord.com/api/v10/users/@me/connections', config(accessToken))
+
+        if (returnData.status !== 200) {
+            return new Error("Unable to fetch user connections")
+        }
 
         const data = returnData.data
         const steamData = data.filter((connection) => connection.type === 'steam')
@@ -37,20 +47,22 @@ async function getUserSteamID(accessToken) {
             return new Error("Missing Steam account connection")
         }
 
-        return steamData[0].id
+        return steamData
     } catch (e) {
-        console.error(e)
         return new Error("Unable to fetch user connections")
     }
 }
 
-async function getUserId(accessToken) {
+async function getUser(accessToken) {
     try {
         console.log("🔃 | Getting user ID from Discord API")
-        const returnData = await axios.get('https://discord.com/api/v10/users/@me', {headers: {Authorization: `Bearer ${accessToken}`}})
+        const returnData = await axios.get('https://discord.com/api/v10/users/@me', config(accessToken))
 
-        const data = returnData.data
-        return data.id
+        if (returnData.status !== 200) {
+            return new Error("Unable to fetch user data")
+        }
+
+        return returnData.data
     } catch (e) {
         console.error(e)
         return new Error("Unable to fetch user data")
@@ -59,6 +71,6 @@ async function getUserId(accessToken) {
 
 module.exports = {
     getAccessToken,
-    getUserSteamID,
-    getUserId
+    getUserSteamAccounts,
+    getUser
 }

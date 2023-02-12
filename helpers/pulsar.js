@@ -1,11 +1,11 @@
-import axios from "./axios";
+import axios from "axios";
 import ids from "./ids.json";
 const guild = process.env.PULSAR_GUILD
 const accessToken = process.env.PULSAR_TOKEN
 
-async function giveRole(roleId, userId) {
+async function giveRole(roleId, userId, addonId) {
     try {
-        console.log(`🔃 | Giving role to user [User ID: ${userId}], Role ID: [${roleId}]`)
+        console.log(`🔃 | Giving role to user [User ID: ${userId}, Role ID: ${roleId}, Addon ID: ${addonId}]`)
         await axios.put(`https://discord.com/api/v10/guilds/${guild}/members/${userId}/roles/${roleId}`, {}, {
             headers: {
                 "Authorization": `Bot ${accessToken}`
@@ -25,7 +25,7 @@ async function givePulsarRoles(purchases, userId) {
         const roleId = ids[id]
         if (!roleId) return;
         try {
-            giveRole(ids["customer"], userId)
+            giveRole(roleId, userId, id)
         } catch (e) {
             console.error(e)
             return new Error("Unable to give customer role")
@@ -34,8 +34,7 @@ async function givePulsarRoles(purchases, userId) {
     })
     if (customer) {
         try {
-            console.log(`"🔃 | Giving customer role to user [User ID: ${userId}`)
-            await giveRole(ids["customer"], userId)
+            await giveRole(ids["customer"], userId, "CUSTOMER")
         } catch (e) {
             console.error(e)
             return new Error("Unable to give customer role")

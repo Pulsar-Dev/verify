@@ -5,13 +5,14 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
       colors: {
         blurple: {
-          50: '#5865F2',
-          100: '#4651be',
+          50: '#5865f2',
+          100: '#525ccc',
         },
       },
     },
@@ -19,5 +20,5 @@ module.exports = {
         sans: ['Rubik', ...defaultTheme.fontFamily.sans],
     }
   },
-  plugins: [],
+  plugins: []
 }
