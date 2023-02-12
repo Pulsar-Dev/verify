@@ -7,9 +7,9 @@ export default function Hero() {
   const discordUrl = process.env.NEXT_PUBLIC_DISCORD_SIGNIN
   return (
     <>
-      <div className="">
+      <div className="w-96">
         <Logo />
-        <div>
+        <div className="min-w-full">
           <Link
             className="rounded-md flex items-center justify-center mt-6 bg-blurple-50 hover:bg-blurple-100"
             href={discordUrl}
@@ -19,8 +19,8 @@ export default function Hero() {
             </h1>
           </Link>
         </div>
-        <div className="mx-auto w-full max-w-md rounded-xl backdrop-blur bg-white/30 p-1 mt-12">
-          <Disclosure>
+        <div className="mx-auto w-full min-w-md rounded-xl backdrop-blur bg-white/30 p-1 mt-12">
+          <Disclosure as="div" className="">
             {({ open }) => (
               <>
                 <Disclosure.Button className="flex w-full justify-between rounded-lg backdrop-blur bg-white/50 px-4 py-2 text-left text-sm font-medium text-black hover:bg-white/60 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
