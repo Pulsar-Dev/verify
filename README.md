@@ -16,8 +16,9 @@
    - `PULSAR_GUILD` your Discord guild ID
    - `PULSAR_TOKEN` your Discord bot token
    - `DATABASE_URL` your MySQL database URL `"mysql://username:password@ip:port/database"`
-4. Edit `ids.json` to your liking
-5. Run `pnpm build` to build the project
-6. Run `pnpm start` to start the project
-7. Navigate to `APP_URL` in your browser
-8. Profit
+4. Invite the Discord bot you just created into your server with Admin permissions
+5. Edit `ids.json` to your liking
+6. Run `pnpm build` to build the project
+7. Run `pnpm start` to start the project
+8. Navigate to `APP_URL` in your browser
+9. Profit
